@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Smash Fitness Studio | Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Smash Fitness Studio - training programs, nutrition plans and simple tools like BMI and calorie calculators">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="brand">
+        <div class="logo">SF</div>
+        <div>
+            <h1>Smash Fitness Studio</h1>
+            <div class="student-details small">Name: Raghuveer V — Reg No: 24BCE5238</div>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="workouts.html">Workouts</a>
+        <a href="nutrition.html">Nutrition</a>
+        <a href="membership.html">Membership</a>
+        <a href="bmi.html">BMI</a>
+        <a href="calories.html">Calorie Calc</a>
+    </nav>
+    <div id="auth-area" class="auth-area">
+        <!-- populated by auth.js: shows Login or Account menu -->
+        <button id="auth-btn" class="auth-btn">Login</button>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <div class="hero-card">
+            <h2>Train Hard. Look Better. Feel Unstoppable.</h2>
+            <p class="muted">Personalized programs and nutrition tools to help you reach your goals — weight loss, muscle gain, or performance.</p>
+            <div class="cta-row" style="margin-top:18px">
+                <a class="btn" href="membership.html">Join Now</a>
+                <a class="btn secondary" href="workouts.html">Explore Programs</a>
+            </div>
+
+            <div class="section" style="margin-top:18px">
+                <div class="cards">
+                    <div class="card" role="article" aria-labelledby="pt-title">
+                        <h3 id="pt-title">Personal Training</h3>
+                        <p class="muted">One-to-one guidance to reach goals faster.</p>
+                        <a class="button-link" href="personal-training.html">Learn more</a>
+                    </div>
+                    <div class="card" role="article" aria-labelledby="nc-title">
+                        <h3 id="nc-title">Nutrition Coaching</h3>
+                        <p class="muted">Meal plans for cutting, maintenance, and bulking.</p>
+                        <a class="button-link" href="nutrition-coaching.html">View plans</a>
+                    </div>
+                    <div class="card" role="article" aria-labelledby="ot-title">
+                        <h3 id="ot-title">Online Tools</h3>
+                        <p class="muted">Quick calculators for BMI and daily calories.</p>
+                        <a class="button-link" href="online-tools.html">Open tools</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="hero-card">
+            <h3 class="small">Quick Tools</h3>
+            <div style="margin-top:10px">
+                <a class="btn" href="bmi.html" style="display:block;margin-bottom:8px">BMI Calculator</a>
+                <a class="btn secondary" href="calories.html" style="display:block">Daily Calorie Calculator</a>
+            </div>
+            <div class="muted small" style="margin-top:12px">Tip: use the calorie calculator to pick a suitable daily goal for cutting (-20%) or bulking (+15%).</div>
+        </aside>
+    </section>
+
+    <section class="section">
+        <div class="card">
+            <h3>Why Smash?</h3>
+            <p class="muted">We combine training science, coaching, and simple tools so you can build healthy habits and measurable progress.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">© 2025 Smash Fitness Studio</footer>
+<script src="auth.js"></script>
+
+</body>
+</html>
