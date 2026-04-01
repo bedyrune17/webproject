@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Dashboard | Smash Fitness Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-grid{display:grid;grid-template-columns:240px 1fr;gap:16px}
+    .admin-sidebar{border-right:1px solid #e6e6e6;padding-right:12px}
+    .admin-nav a{display:block;padding:8px 6px;margin-bottom:6px;border-radius:4px;text-decoration:none}
+    .admin-nav a.active{background:#f0f0f0}
+    .admin-tabs .tab-link{padding:8px 12px;background:transparent;border-radius:6px;color:#ddd;text-decoration:none}
+    .admin-tabs .tab-link.active{background:#ef4444;color:#fff}
+    .section-card{margin-bottom:14px}
+    table{width:100%;border-collapse:collapse}
+    table td,table th{padding:6px;border:1px solid #eee}
+    .small-muted{color:#666;font-size:0.9rem}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="brand"><div class="logo">SF</div><div><h1>Admin Dashboard</h1></div></div>
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="workouts.html">Workouts</a>
+    <a href="nutrition.html">Nutrition</a>
+    <a href="membership.html">Membership</a>
+  </nav>
+  <div id="auth-area" class="auth-area"></div>
+</header>
+
+<main class="container">
+  <div class="admin-grid">
+    <section style="width:100%">
+      <nav class="admin-tabs card" style="display:flex;gap:8px;flex-wrap:wrap;padding:10px;margin-bottom:12px">
+        <a href="#profile" class="tab-link">Admin Profile</a>
+        <a href="#members" class="tab-link">Members</a>
+        <a href="#past" class="tab-link">Past Members</a>
+        <a href="#due" class="tab-link">Due Members</a>
+        <a href="#attendance" class="tab-link">Attendance</a>
+        <a href="#staff" class="tab-link">Staff Attendance</a>
+        <a href="#hours" class="tab-link">Working Hours</a>
+        <a href="#calendar" class="tab-link">Calendar</a>
+        <a href="#finance" class="tab-link">Incomes & Expenses</a>
+      </nav>
+
+      <div id="profile" class="card section-card">
+        <h2>Admin Profile</h2>
+        <p class="small-muted">View and edit the logged-in admin details.</p>
+        <form id="adminProfileForm" style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+          <input id="aName" placeholder="Full name" class="input" required>
+          <input id="aEmail" placeholder="Email (readonly)" class="input" readonly>
+          <input id="aEmployeeId" placeholder="Employee ID" class="input">
+          <select id="aRole" class="input">
+            <option value="staff">Staff</option>
+            <option value="cashier">Cashier</option>
+            <option value="cleaning">Cleaning Staff</option>
+            <option value="coach">Coach</option>
+            <option value="manager">Manager</option>
+          </select>
+          <button class="btn" id="saveAdminProfile">Save Profile</button>
+        </form>
+      </div>
+
+      <div id="members" class="card section-card">
+        <h2>Members</h2>
+        <p class="small-muted">Add, edit, and view active members.</p>
+        <form id="memberForm" style="display:flex;gap:8px;margin:8px 0;flex-wrap:wrap">
+          <input id="mName" placeholder="Full name" class="input" required>
+          <input id="mEmail" placeholder="Email" class="input">
+          <input id="mJoinDateTime" type="datetime-local" class="input" title="Joining date and time">
+          <select id="mPaymentMode" class="input">
+            <option value="cash">Cash</option>
+            <option value="card">Card</option>
+            <option value="online">Online</option>
+          </select>
+          <input id="mDuration" type="number" min="1" placeholder="Duration (months)" class="input">
+          <button class="btn" id="addMember">New Member</button>
+        </form>
+        <div id="membersList"></div>
+      </div>
+
+      <div id="past" class="card section-card">
+        <h2>Past Members</h2>
+        <div id="pastList"></div>
+      </div>
+
+      <div id="due" class="card section-card">
+        <h2>Due Members</h2>
+        <div id="dueList"></div>
+      </div>
+
+      <div id="attendance" class="card section-card">
+        <h2>Member Attendance (Today)</h2>
+        <p class="small-muted">Toggle attendance for today.</p>
+        <div id="attendanceList"></div>
+      </div>
+
+      <div id="staff" class="card section-card">
+        <h2>Staff Attendance</h2>
+        <form id="staffForm" style="display:flex;gap:8px;margin:8px 0">
+          <input id="sName" placeholder="Staff name" class="input">
+          <button class="btn" id="addStaff">Add/Mark Present</button>
+        </form>
+        <div id="staffList"></div>
+      </div>
+
+      <div id="hours" class="card section-card">
+        <h2>Working Hours</h2>
+        <p class="small-muted">Set gym open/close hours per weekday.</p>
+        <div id="hoursForm"></div>
+      </div>
+
+      <div id="calendar" class="card section-card">
+        <h2>Calendar</h2>
+        <input type="date" id="calDate"> <button class="btn" id="showDate">Show</button>
+        <div id="calendarEvents" style="margin-top:8px"></div>
+      </div>
+
+      <div id="finance" class="card section-card">
+        <h2>Incomes & Expenses</h2>
+        <form id="financeForm" style="display:flex;gap:8px;margin:8px 0;flex-wrap:wrap">
+          <select id="feType" class="input"><option value="income">Income</option><option value="expense">Expense</option></select>
+          <input id="feAmount" type="number" step="0.01" placeholder="Amount" class="input">
+          <input id="feDesc" placeholder="Description" class="input">
+          <button class="btn" id="addFinance">Record</button>
+        </form>
+        <div id="financeList"></div>
+      </div>
+
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">© 2025 Smash Fitness Studio</footer>
+
+<script src="auth.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
