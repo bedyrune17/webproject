@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Membership | Smash Fitness Studio</title>
+    <meta name="description" content="Compare the membership plans offered by Smash Fitness Studio.">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page-scope="public">
 
 <header class="site-header">
     <div class="brand"><div class="logo">SF</div><div><h1>Membership</h1></div></div>
-    <nav class="main-nav">
+    <nav class="main-nav" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="workouts.html">Workouts</a>
         <a href="nutrition.html">Nutrition</a>
@@ -22,35 +25,47 @@
 </header>
 
 <main class="container">
-    <div class="card">
-        <h2>Plans</h2>
-        <p class="muted">Flexible plans to suit students and regular gym-goers.</p>
-        <table border="0" cellpadding="10">
-            <tr>
-                <th style="text-align:left">Plan</th>
-                <th>Duration</th>
-                <th>Price</th>
-            </tr>
-            <tr>
-                <td>Basic</td>
-                <td>1 Month</td>
-                <td>₹1500</td>
-            </tr>
-            <tr>
-                <td>Pro</td>
-                <td>6 Months</td>
-                <td>₹7500</td>
-            </tr>
-            <tr>
-                <td>Elite</td>
-                <td>1 Year</td>
-                <td>₹14000</td>
-            </tr>
-        </table>
+    <div class="page-hero">
+        <div class="card">
+            <span class="page-pill">Membership</span>
+            <h2>Flexible plans for students and regular gym-goers</h2>
+            <p class="muted">The pricing structure is simple, understandable, and easy to present inside the admin dashboard workflow.</p>
+            <table>
+                <tr>
+                    <th>Plan</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                </tr>
+                <tr>
+                    <td>Basic</td>
+                    <td>1 Month</td>
+                    <td>Rs. 1500</td>
+                </tr>
+                <tr>
+                    <td>Pro</td>
+                    <td>6 Months</td>
+                    <td>Rs. 7500</td>
+                </tr>
+                <tr>
+                    <td>Elite</td>
+                    <td>1 Year</td>
+                    <td>Rs. 14000</td>
+                </tr>
+            </table>
+        </div>
+        <div class="card">
+            <span class="page-pill">Included</span>
+            <h3>What members get</h3>
+            <ul class="feature-list">
+                <li><span><strong>Gym access</strong><br>Standard access during posted working hours.</span></li>
+                <li><span><strong>Program guidance</strong><br>Recommended workout paths and nutrition pages.</span></li>
+                <li><span><strong>Easy upgrades</strong><br>Add personal training or nutrition coaching later.</span></li>
+            </ul>
+        </div>
     </div>
 </main>
 
-<footer class="site-footer">© 2025 Smash Fitness Studio</footer>
+<footer class="site-footer">© 2026 Smash Fitness Studio</footer>
 <script src="auth.js"></script>
 
 </body>

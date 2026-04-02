@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>BMI Calculator | Smash Fitness Studio</title>
+    <meta name="description" content="Calculate body mass index and understand your basic BMI category.">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page-scope="public">
 <header class="site-header">
     <div class="brand"><div class="logo">SF</div><div><h1>BMI Calculator</h1></div></div>
-    <nav class="main-nav">
+    <nav class="main-nav" aria-label="Primary">
         <a href="index.html">Home</a>
         <a href="workouts.html">Workouts</a>
         <a href="nutrition.html">Nutrition</a>
@@ -17,28 +18,37 @@
         <a href="bmi.html">BMI</a>
         <a href="calories.html">Calorie Calc</a>
     </nav>
+    <div id="auth-area" class="auth-area">
+        <button id="auth-btn" class="auth-btn">Login</button>
+    </div>
 </header>
-
-        <div id="auth-area" class="auth-area">
-            <button id="auth-btn" class="auth-btn">Login</button>
-        </div>
 <main class="container">
-    <div class="card form-card">
-        <h2>Body Mass Index (BMI)</h2>
-        <p class="muted small">Enter your weight and height to calculate BMI and see the category.</p>
-        <form id="bmiForm" class="form-row" style="margin-top:12px">
-            <input id="weight" class="input" type="number" placeholder="Weight (kg)" min="20" step="0.1" required aria-label="Weight">
-            <input id="height" class="input" type="number" placeholder="Height (cm)" min="80" step="0.1" required aria-label="Height">
-            <div style="display:flex;gap:8px;align-items:center">
+    <div class="page-hero">
+        <div class="card form-card">
+            <span class="page-pill">Health tool</span>
+            <h2>Body Mass Index (BMI)</h2>
+            <p class="muted small">Enter your weight and height to calculate BMI and see a broad health category.</p>
+            <form id="bmiForm" class="form-row" style="margin-top:12px">
+                <input id="weight" class="input" type="number" placeholder="Weight (kg)" min="20" step="0.1" required aria-label="Weight">
+                <input id="height" class="input" type="number" placeholder="Height (cm)" min="80" step="0.1" required aria-label="Height">
                 <button type="submit" class="btn">Calculate</button>
                 <button type="button" id="resetBtn" class="btn secondary">Reset</button>
-            </div>
-        </form>
-        <div id="bmiResult" class="result" style="display:none;margin-top:12px"></div>
+            </form>
+            <div id="bmiResult" class="result" style="display:none;margin-top:12px"></div>
+        </div>
+        <div class="card">
+            <span class="page-pill">Note</span>
+            <h3>How to read the result</h3>
+            <ul class="feature-list">
+                <li><span><strong>Useful for screening</strong><br>BMI is a quick estimate based on height and weight.</span></li>
+                <li><span><strong>Not the full picture</strong><br>It does not separately measure fat mass, muscle mass, or athletic build.</span></li>
+                <li><span><strong>Best used with context</strong><br>Combine BMI with progress photos, measurements, energy levels, and training performance.</span></li>
+            </ul>
+        </div>
     </div>
 </main>
 
-<footer class="site-footer">© 2025 Smash Fitness Studio</footer>
+<footer class="site-footer">© 2026 Smash Fitness Studio</footer>
 
 <script src="auth.js"></script>
 
