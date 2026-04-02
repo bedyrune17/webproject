@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="calTitle" role="img">
+  <title id="calTitle">Calories (flame) icon</title>
+  <path d="M32 6C28 14 20 18 20 30c0 8.8 7.2 16 16 16 0 0 6-3 8-8 2-5 6-7 6-14 0-9-10-16-18-18z" fill="#ff6b00"/>
+  <path d="M28 38c-6 0-8-6-8-10 0-6 6-8 8-12 2 4 6 6 6 12 0 6-4 10-6 10z" fill="#ffb366" opacity="0.95"/>
+  <circle cx="32" cy="46" r="8" fill="#fff" opacity="0.06" stroke="#b11212" stroke-width="1"/>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="calTitle" role="img">
+  <title id="calTitle">Calories (flame) icon</title>
+  <path d="M32 6C28 14 20 18 20 30c0 8.8 7.2 16 16 16 0 0 6-3 8-8 2-5 6-7 6-14 0-9-10-16-18-18z" fill="#ff6b00"/>
+  <path d="M28 38c-6 0-8-6-8-10 0-6 6-8 8-12 2 4 6 6 6 12 0 6-4 10-6 10z" fill="#ffb366" opacity="0.95"/>
+  <circle cx="32" cy="46" r="8" fill="#fff" opacity="0.06" stroke="#b11212" stroke-width="1"/>
+</svg>
