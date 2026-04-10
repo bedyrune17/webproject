@@ -4,19 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Member Dashboard | Smash Fitness Studio</title>
-  <meta name="description" content="Simple member dashboard for Smash Fitness Studio with profile details and biometric attendance.">
+  <meta name="description" content="Private member dashboard for attendance, billing, classes, and progress tracking.">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page-scope="member">
+<body class="member-shell" data-page-scope="member">
 <header class="site-header">
   <div class="brand">
     <div class="logo">SF</div>
-    <div><h1>Member Dashboard</h1></div>
+    <div>
+      <h1>Member Dashboard</h1>
+      <div class="small">Attendance, bookings, renewals, and progress in one place</div>
+    </div>
   </div>
   <nav class="main-nav" aria-label="Member sections">
-    <a href="#overview">Overview</a>
-    <a href="#attendance">Attendance</a>
-    <a href="#membership">Membership</a>
+    <a href="#overview" data-member-target="overview">Overview</a>
+    <a href="#attendance" data-member-target="attendance">Attendance</a>
+    <a href="#classes" data-member-target="classes">Classes</a>
+    <a href="#billing" data-member-target="billing">Billing</a>
+    <a href="#progress" data-member-target="progress">Progress</a>
   </nav>
   <div id="auth-area" class="auth-area">
     <button id="auth-btn" class="auth-btn">Login</button>
@@ -25,253 +30,41 @@
 
 <main class="container">
   <div class="page-hero">
-    <div class="card form-card">
+    <section class="card form-card">
       <span class="page-pill">Member profile</span>
-      <h2>Manage your personal details</h2>
-      <p class="muted">Keep your member details updated for attendance records and dashboard access.</p>
-      <form id="acctForm" style="margin-top:12px">
+      <h2>Keep your profile and membership details current</h2>
+      <p class="muted">This dashboard now runs as a proper member app, so your attendance, class bookings, trainer info, and billing all stay inside one private flow.</p>
+      <form id="acctForm" class="stack-sm top-gap-md">
         <div class="form-row">
-          <input id="acct-name" class="input" placeholder="Full name">
-          <input id="acct-email" class="input" placeholder="Email (optional)">
+          <input id="acct-name" class="input" placeholder="Full name" autocomplete="name">
+          <input id="acct-email" class="input" placeholder="Email address" type="email" autocomplete="email">
         </div>
-        <div class="cta-row" style="margin-top:10px">
-          <button id="saveAcct" class="btn" type="button">Save</button>
-          <button id="logoutAcct" class="btn secondary" type="button">Logout</button>
+        <div class="cta-row">
+          <button id="saveAcct" class="btn" type="button">Save profile</button>
+          <button id="clearAcct" class="btn secondary" type="button">Logout</button>
         </div>
       </form>
-      <div id="acctMsg" class="muted small" style="margin-top:12px"></div>
-    </div>
-    <div class="card">
-      <span class="page-pill">Member access</span>
-      <h3>What you can do here</h3>
-      <ul class="feature-list">
-        <li><span><strong>Biometric attendance</strong><br>Mark today’s gym visit from member mode.</span></li>
-        <li><span><strong>Membership snapshot</strong><br>See your local plan, renewal date, and status.</span></li>
-        <li><span><strong>Private view</strong><br>This page is separate from admin mode and public pages.</span></li>
+      <div id="acctMsg" class="small-muted top-gap-sm" aria-live="polite"></div>
+    </section>
+
+    <aside class="card">
+      <span class="page-pill">Quick access</span>
+      <h3>What changed here</h3>
+      <ul class="feature-list top-gap-sm">
+        <li><span><strong>Real member sections</strong><br>Overview, biometric attendance, class booking, billing, and progress all live in one dashboard.</span></li>
+        <li><span><strong>Shared gym data</strong><br>Member and admin pages now use the same local records instead of separate browser-only logic.</span></li>
+        <li><span><strong>Cleaner navigation</strong><br>Only the active member tools stay visible, so the page feels focused instead of mixed with public content.</span></li>
       </ul>
-    </div>
+    </aside>
   </div>
 
-  <section id="overview" class="card section">
-    <span class="page-pill">Overview</span>
-    <h2>Member overview</h2>
-    <div id="memberOverview" style="margin-top:1rem"></div>
-  </section>
-
-  <section id="attendance" class="card section">
-    <span class="page-pill">Attendance</span>
-    <h2>Biometric attendance</h2>
-    <div id="memberAttendance" style="margin-top:1rem"></div>
-  </section>
-
-  <section id="membership" class="card section">
-    <span class="page-pill">Membership</span>
-    <h2>Membership details</h2>
-    <div id="memberMembership" style="margin-top:1rem"></div>
-  </section>
+  <div id="modeArea" class="top-gap-md"></div>
 </main>
 
 <footer class="site-footer">© 2026 Smash Fitness Studio</footer>
 
 <script src="auth.js"></script>
-<script>
-(function(){
-  const USER_KEY = 'sf_user';
-  const DATA_KEY = 'sf_admin_data_v1';
-  const nameEl = document.getElementById('acct-name');
-  const emailEl = document.getElementById('acct-email');
-  const msgEl = document.getElementById('acctMsg');
-
-  function localDateKey(date){
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
-  function addMonths(dateValue, months){
-    const base = dateValue ? new Date(dateValue) : new Date();
-    base.setMonth(base.getMonth() + Number(months || 0));
-    return localDateKey(base);
-  }
-
-  function getUser(){
-    try{
-      return JSON.parse(localStorage.getItem(USER_KEY) || 'null');
-    } catch(e){
-      return null;
-    }
-  }
-
-  function setUser(user){
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-
-  function loadData(){
-    try{
-      return Object.assign({ members: [], attendance: {} }, JSON.parse(localStorage.getItem(DATA_KEY) || 'null') || {});
-    } catch(e){
-      return { members: [], attendance: {} };
-    }
-  }
-
-  function saveData(data){
-    localStorage.setItem(DATA_KEY, JSON.stringify(data));
-  }
-
-  function escape(value){
-    return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  function findMember(data, user){
-    if(!user) return null;
-    return (data.members || []).find(function(member){
-      if(user.email && member.email){
-        return member.email.toLowerCase() === user.email.toLowerCase();
-      }
-      return (member.name || '').toLowerCase() === (user.name || '').toLowerCase();
-    }) || null;
-  }
-
-  function ensureMember(data, user){
-    let member = findMember(data, user);
-    if(member) return member;
-    member = {
-      id: 'm_' + Math.random().toString(36).slice(2, 8),
-      name: user.name || 'Member',
-      email: user.email || '',
-      joinDateTime: new Date().toISOString().slice(0, 16),
-      paymentMode: 'cash',
-      durationMonths: 1,
-      subscriptionEnd: addMonths(new Date().toISOString(), 1),
-      active: true,
-      biometricId: 'BIO-' + String(Math.floor(Math.random() * 9000) + 1000)
-    };
-    data.members.push(member);
-    saveData(data);
-    return member;
-  }
-
-  function recentVisits(data, member){
-    return Object.keys(data.attendance || {})
-      .filter(function(dateKey){
-        return (data.attendance[dateKey] || []).indexOf(member.id) > -1;
-      })
-      .sort()
-      .reverse()
-      .slice(0, 5);
-  }
-
-  function renderMember(){
-    const user = getUser();
-    if(!user || user.role !== 'member') return;
-
-    const data = loadData();
-    const member = ensureMember(data, user);
-    const visits = recentVisits(data, member);
-    const checkedInToday = visits.indexOf(localDateKey(new Date())) > -1;
-
-    document.getElementById('memberOverview').innerHTML = `
-      <div class="kpi-row">
-        <div class="kpi"><strong>${escape(member.name)}</strong><span class="muted">Member name</span></div>
-        <div class="kpi"><strong>${member.active === false ? 'Inactive' : 'Active'}</strong><span class="muted">Status</span></div>
-        <div class="kpi"><strong>${member.durationMonths || 1} month</strong><span class="muted">Duration</span></div>
-        <div class="kpi"><strong>${escape(member.subscriptionEnd || '-')}</strong><span class="muted">Renewal date</span></div>
-      </div>
-    `;
-
-    document.getElementById('memberAttendance').innerHTML = `
-      <div class="split-layout">
-        <div class="card compact-card">
-          <span class="page-pill">Today</span>
-          <h3>${checkedInToday ? 'Attendance recorded' : 'Ready to check in'}</h3>
-          <p class="muted">Biometric ID: ${escape(member.biometricId || 'Pending')}</p>
-          <div class="cta-row" style="margin-top:0.9rem">
-            <button id="bioCheckIn" type="button" class="btn" ${checkedInToday ? 'disabled' : ''}>${checkedInToday ? 'Checked in today' : 'Biometric attendance'}</button>
-          </div>
-        </div>
-        <div class="card compact-card">
-          <span class="page-pill">Recent visits</span>
-          <h3>Visit history</h3>
-          ${visits.length ? `<ul class="feature-list">${visits.map(function(dateKey){
-            return `<li><span><strong>${escape(dateKey)}</strong><br><span class="small-muted">Attendance saved locally.</span></span></li>`;
-          }).join('')}</ul>` : '<p class="small-muted">No visits recorded yet.</p>'}
-        </div>
-      </div>
-    `;
-
-    document.getElementById('memberMembership').innerHTML = `
-      <div class="split-layout">
-        <div class="card compact-card">
-          <span class="page-pill">Plan</span>
-          <h3>Basic local membership</h3>
-          <p class="muted">Payment mode: ${escape(member.paymentMode || 'cash')}</p>
-          <p class="muted">Joined: ${escape((member.joinDateTime || '').replace('T', ' '))}</p>
-        </div>
-        <div class="card compact-card">
-          <span class="page-pill">Renewal</span>
-          <h3>Subscription status</h3>
-          <p class="muted">Current expiry: ${escape(member.subscriptionEnd || '-')}</p>
-          <p class="muted">Status: ${member.active === false ? 'Inactive' : 'Active'}</p>
-        </div>
-      </div>
-    `;
-
-    const bioButton = document.getElementById('bioCheckIn');
-    if(bioButton){
-      bioButton.addEventListener('click', function(){
-        const latest = loadData();
-        const latestMember = ensureMember(latest, getUser());
-        const dateKey = localDateKey(new Date());
-        latest.attendance[dateKey] = latest.attendance[dateKey] || [];
-        if(latest.attendance[dateKey].indexOf(latestMember.id) === -1){
-          latest.attendance[dateKey].push(latestMember.id);
-          saveData(latest);
-        }
-        msgEl.textContent = 'Biometric attendance saved for today.';
-        renderMember();
-      });
-    }
-  }
-
-  document.getElementById('saveAcct').addEventListener('click', function(){
-    const currentUser = getUser();
-    const name = nameEl.value.trim();
-    const email = emailEl.value.trim();
-    if(!name){
-      msgEl.textContent = 'Please enter a name.';
-      return;
-    }
-
-    const data = loadData();
-    const member = currentUser ? findMember(data, currentUser) : null;
-    if(member){
-      member.name = name;
-      member.email = email;
-      saveData(data);
-    }
-
-    setUser({ name: name, email: email, role: 'member' });
-    msgEl.textContent = 'Saved.';
-    window.dispatchEvent(new Event('storage'));
-    renderMember();
-  });
-
-  document.getElementById('logoutAcct').addEventListener('click', function(){
-    localStorage.removeItem(USER_KEY);
-    window.dispatchEvent(new Event('storage'));
-    window.location.href = 'index.html';
-  });
-
-  (function loadProfile(){
-    const user = getUser();
-    if(user){
-      nameEl.value = user.name || '';
-      emailEl.value = user.email || '';
-    }
-    renderMember();
-  })();
-})();
-</script>
+<script src="gym-data.js"></script>
+<script src="member-app.js"></script>
 </body>
 </html>

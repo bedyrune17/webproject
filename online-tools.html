@@ -8,7 +8,7 @@
 </head>
 <body data-page-scope="public">
 <header class="site-header">
-  <div class="brand"><div class="logo">SF</div><div><h1>Online Tools</h1></div></div>
+  <div class="brand"><div class="logo">SF</div><div><h1>Smash Fitness Studio</h1></div></div>
   <nav class="main-nav" aria-label="Primary">
     <a href="index.html">Home</a>
     <a href="workouts.html">Workouts</a>
@@ -23,29 +23,76 @@
 </header>
 
 <main class="container">
-  <div class="page-hero">
-    <div class="card">
+  <section class="page-banner">
+    <div class="card page-banner-copy">
       <span class="page-pill">Online tools</span>
       <h2>Fast calculators for members and prospects</h2>
-      <p class="muted">These pages turn the site from a brochure into something interactive and useful.</p>
-      <ul class="feature-list" style="margin-top:1rem">
-        <li><span><a class="button-link" href="bmi.html">BMI calculator</a><br>Estimate body mass index and see the broad category.</span></li>
-        <li><span><a class="button-link" href="calories.html">Daily calorie calculator</a><br>Estimate BMR, TDEE, goal calories, and starting macros.</span></li>
-      </ul>
-    </div>
-    <div class="card">
-      <span class="page-pill">Best practice</span>
-      <h3>How to use the outputs</h3>
-      <p class="muted">Treat both tools as starting points. Track progress for 2 to 4 weeks, compare the result with your goal, and then adjust calories or training volume.</p>
-      <div class="cta-row" style="margin-top:1rem">
+      <p class="muted">Visitors can get a quick baseline immediately, then move into coaching or membership with a clearer starting point.</p>
+      <div class="metric-strip">
+        <div class="metric-tile"><strong>BMI screening</strong><span class="muted">Quick health-category estimate.</span></div>
+        <div class="metric-tile"><strong>Calorie planning</strong><span class="muted">Maintenance and goal-based intake estimates.</span></div>
+        <div class="metric-tile"><strong>Useful next step</strong><span class="muted">Each tool connects back to training or nutrition support.</span></div>
+      </div>
+      <div class="cta-row">
         <a class="btn" href="bmi.html">Open BMI tool</a>
         <a class="btn secondary" href="calories.html">Open calorie tool</a>
       </div>
     </div>
-  </div>
+    <div class="page-banner-media">
+      <img src="https://images.pexels.com/photos/31913731/pexels-photo-31913731.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Member checking progress on a phone inside a gym" class="cover-image">
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="cards">
+      <article class="card photo-card">
+        <img src="https://images.pexels.com/photos/11682724/pexels-photo-11682724.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Athlete in a gym before training" class="cover-image">
+        <span class="page-pill">BMI calculator</span>
+        <h3>Know your starting point</h3>
+        <p class="muted">Estimate body mass index, understand the broad category, and use it as one piece of a bigger picture with photos, measurements, and gym performance.</p>
+        <a class="btn" href="bmi.html">Open BMI tool</a>
+      </article>
+      <article class="card photo-card">
+        <img src="https://images.pexels.com/photos/30635703/pexels-photo-30635703.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Prepared meals lined up for nutrition planning" class="cover-image">
+        <span class="page-pill">Calorie calculator</span>
+        <h3>Build a practical food target</h3>
+        <p class="muted">Estimate maintenance calories, goal calories, and a starting macro split, then adjust after 2 to 4 weeks of real progress tracking.</p>
+        <a class="btn" href="calories.html">Open calorie tool</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="split-layout">
+      <div class="card compact-card">
+        <span class="page-pill">How members use them</span>
+        <ul class="feature-list top-gap-sm">
+          <li><span><strong>Before joining</strong><br>Get a first estimate and decide whether the gym is relevant to the goal.</span></li>
+          <li><span><strong>After joining</strong><br>Use the numbers to support attendance, training, and meal-planning consistency.</span></li>
+          <li><span><strong>During coaching</strong><br>Give trainers and nutrition support a sensible starting reference.</span></li>
+        </ul>
+      </div>
+      <div class="card compact-card">
+        <span class="page-pill">Best practice</span>
+        <p class="muted">Treat both tools as starting points. Track bodyweight, performance, appetite, recovery, and routine quality before changing calories or training volume aggressively.</p>
+        <div class="cta-row top-gap-sm">
+          <a class="btn" href="nutrition-coaching.html">Get coaching</a>
+          <a class="btn secondary" href="membership.html">Join the gym</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer class="site-footer">© 2026 Smash Fitness Studio</footer>
+<footer class="site-footer rich-footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><div class="logo">SF</div><div><h3>Smash Fitness Studio</h3><p class="muted">Interactive tools that help members plan before the first session.</p></div></div></div>
+    <div><h4>Explore</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="workouts.html">Workouts</a></li><li><a href="nutrition.html">Nutrition</a></li><li><a href="membership.html">Membership</a></li></ul></div>
+    <div><h4>Tools</h4><ul class="footer-links"><li><a href="bmi.html">BMI Calculator</a></li><li><a href="calories.html">Calorie Calculator</a></li><li><a href="nutrition-coaching.html">Nutrition Coaching</a></li><li><a href="account.html" data-open-login="member">Member Dashboard</a></li></ul></div>
+    <div><h4>Contact</h4><ul class="footer-links"><li><a href="mailto:hello@smashfit.example">hello@smashfit.example</a></li><li><a href="tel:+919000033333">+91 90000 33333</a></li><li><a href="admin.html" data-open-login="admin">Admin Dashboard</a></li></ul></div>
+  </div>
+  <p class="footer-note">© 2026 Smash Fitness Studio</p>
+</footer>
 <script src="auth.js"></script>
 
 </body>

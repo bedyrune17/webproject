@@ -4,6 +4,8 @@
   const MEMBER_HOME = 'account.html';
   const ADMIN_HOME = 'admin.html';
   const PUBLIC_HOME = 'index.html';
+  let menuOutsideHandler = null;
+  let menuEscapeHandler = null;
   function getUser(){try{return JSON.parse(localStorage.getItem(AUTH_KEY))}catch(e){return null}}
   function setUser(u){localStorage.setItem(AUTH_KEY, JSON.stringify(u))}
   function clearUser(){localStorage.removeItem(AUTH_KEY)}
@@ -190,15 +192,7 @@
         nav.classList.remove('admin-mode');
         return;
       }
-      if(role === 'admin'){
-        try{
-          const a = document.createElement('a');
-          a.href = ADMIN_HOME;
-          a.textContent = 'Admin';
-          a.className = 'admin-quick-link';
-          nav.appendChild(a);
-        }catch(e){}
-      }
+      if(role === 'admin') return;
     }catch(e){/* ignore */}
   }
 
@@ -208,23 +202,43 @@
     const dd = document.getElementById('auth-dropdown');
     const logout = document.getElementById('logout-btn');
     if(!accBtn || !dd) return;
+    if(menuOutsideHandler){
+      document.removeEventListener('click', menuOutsideHandler);
+      menuOutsideHandler = null;
+    }
+    if(menuEscapeHandler){
+      document.removeEventListener('keydown', menuEscapeHandler);
+      menuEscapeHandler = null;
+    }
     accBtn.addEventListener('click', (e)=>{
       e.stopPropagation();
       const opened = dd.style.display === 'block';
       dd.style.display = opened ? 'none' : 'block';
-      accBtn.setAttribute('aria-expanded', !opened);
+      accBtn.setAttribute('aria-expanded', opened ? 'false' : 'true');
     });
     logout.addEventListener('click', ()=>{
       clearUser();
       render();
       window.location.href = PUBLIC_HOME;
     });
-    // close on outside click
-    document.addEventListener('click', function(){ if(dd) dd.style.display='none'; if(accBtn) accBtn.setAttribute('aria-expanded','false') });
+    menuOutsideHandler = function(event){
+      if(!event.target.closest('.auth-menu')){
+        dd.style.display = 'none';
+        accBtn.setAttribute('aria-expanded', 'false');
+      }
+    };
+    menuEscapeHandler = function(event){
+      if(event.key === 'Escape'){
+        dd.style.display = 'none';
+        accBtn.setAttribute('aria-expanded', 'false');
+      }
+    };
+    document.addEventListener('click', menuOutsideHandler);
+    document.addEventListener('keydown', menuEscapeHandler);
   }
 
   // Modal login UI
-  function showLoginModal(){
+  function showLoginModal(defaultRole){
     // avoid multiple modals
     if(document.getElementById('sf-auth-modal')) return;
     const modalHtml = `
@@ -255,21 +269,38 @@
     const nameIn = document.getElementById('sf-name');
     const emailIn = document.getElementById('sf-email');
     const cancelBtn = document.getElementById('sf-cancel');
+    const roleSelect = document.getElementById('sf-role');
+    let escHandler = null;
+
+    if(roleSelect && (defaultRole === 'admin' || defaultRole === 'member')){
+      roleSelect.value = defaultRole;
+    }
 
     // focus first input
     setTimeout(()=> nameIn.focus(), 10);
 
-    function closeModal(){ if(modal) modal.remove(); }
+    function closeModal(){
+      if(escHandler){
+        document.removeEventListener('keydown', escHandler);
+        escHandler = null;
+      }
+      if(modal) modal.remove();
+    }
 
     cancelBtn.addEventListener('click', ()=>{ closeModal(); });
     modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-    document.addEventListener('keydown', function escHandler(e){ if(e.key==='Escape'){ closeModal(); document.removeEventListener('keydown', escHandler) } });
+    escHandler = function(e){
+      if(e.key === 'Escape'){
+        closeModal();
+      }
+    };
+    document.addEventListener('keydown', escHandler);
 
     form.addEventListener('submit', function(ev){
       ev.preventDefault();
       const name = nameIn.value.trim();
       const email = emailIn.value.trim();
-      const role = (document.getElementById('sf-role')||{}).value || 'member';
+      const role = (roleSelect||{}).value || 'member';
       if(!name){ nameIn.focus(); nameIn.classList.add('input-error'); return }
       setUser({name, email, role});
       window.dispatchEvent(new Event('storage'));
@@ -287,6 +318,18 @@
   // keep header in sync on storage events (e.g., account page saves)
   window.addEventListener('storage', function(){ render(); });
   window.addEventListener('hashchange', function(){ syncActiveNavigation(); });
+  document.addEventListener('click', function(event){
+    const trigger = event.target.closest('[data-open-login]');
+    if(!trigger) return;
+    event.preventDefault();
+    const requestedRole = trigger.dataset.openLogin === 'admin' ? 'admin' : 'member';
+    const user = getUser();
+    if(user && user.role === requestedRole){
+      window.location.href = requestedRole === 'admin' ? ADMIN_HOME : MEMBER_HOME;
+      return;
+    }
+    showLoginModal(requestedRole);
+  });
 
   // init
   document.addEventListener('DOMContentLoaded', render);

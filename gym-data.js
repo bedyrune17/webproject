@@ -33,6 +33,7 @@
         biometricId: 'BIO-1051'
       }
     ],
+    past: [],
     trainers: [
       { id: 't_arjun', name: 'Arjun Menon', specialty: 'Strength and hypertrophy', experience: '7 years', slots: ['06:00', '07:00', '18:00', '19:00'] },
       { id: 't_nisha', name: 'Nisha Varma', specialty: 'Fat loss and conditioning', experience: '5 years', slots: ['08:00', '09:00', '17:00'] },

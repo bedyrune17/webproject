@@ -1,17 +1,7 @@
 (function(){
   const USER_KEY = 'sf_user';
-  const DATA_KEY = 'sf_admin_data_v1';
   const ADM_KEY = 'sf_admins_v1';
   const today = () => new Date().toISOString().slice(0, 10);
-  const defaultData = {
-    members: [],
-    past: [],
-    attendance: {},
-    staffAttendance: {},
-    staff: [],
-    hours: { Mon:['06:00','22:00'], Tue:['06:00','22:00'], Wed:['06:00','22:00'], Thu:['06:00','22:00'], Fri:['06:00','22:00'], Sat:['08:00','20:00'], Sun:['08:00','18:00'] },
-    finance: []
-  };
 
   function escape(s){
     return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -21,16 +11,22 @@
     return `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
   }
 
+  // Use central SmashData storage (sf_platform_data_v2). SmashData provides seed defaults and normalization.
   function loadData(){
     try{
-      return Object.assign({}, defaultData, JSON.parse(localStorage.getItem(DATA_KEY) || 'null') || {});
+      return typeof SmashData !== 'undefined' ? SmashData.load() : { members: [], past: [], attendance: {}, staffAttendance: {}, staff: [], hours: {}, finance: [] };
     } catch(e){
-      return typeof structuredClone === 'function' ? structuredClone(defaultData) : JSON.parse(JSON.stringify(defaultData));
+      return { members: [], past: [], attendance: {}, staffAttendance: {}, staff: [], hours: {}, finance: [] };
     }
   }
 
   function saveData(data){
-    localStorage.setItem(DATA_KEY, JSON.stringify(data));
+    try{
+      if(typeof SmashData !== 'undefined') SmashData.save(data);
+      else localStorage.setItem('sf_admin_data_v1', JSON.stringify(data));
+    } catch(e){
+      // best-effort
+    }
   }
 
   function getUser(){
