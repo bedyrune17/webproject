@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Daily Calorie Calculator | Smash Fitness Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Estimate your BMR and daily calories with activity and goal adjustments (cutting/bulking).">
+</head>
+<body data-page-scope="public">
+<header class="site-header">
+    <div class="brand"><div class="logo">SF</div><div><h1>Smash Fitness Studio</h1></div></div>
+    <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="workouts.html">Workouts</a>
+        <a href="nutrition.html">Nutrition</a>
+        <a href="membership.html">Membership</a>
+        <a href="bmi.html">BMI</a>
+        <a href="calories.html">Calorie Calc</a>
+    </nav>
+    <div id="auth-area" class="auth-area">
+        <button id="auth-btn" class="auth-btn">Login</button>
+    </div>
+</header>
+
+<main class="container">
+    <section class="page-banner">
+        <div class="card page-banner-copy">
+            <span class="page-pill">Nutrition tool</span>
+            <h2>Estimate calories with a useful next step</h2>
+            <p class="muted">The calorie tool should feel like part of a bigger system. Use it to get a starting target, then move into coaching, meal structure, or membership support.</p>
+            <div class="cta-row">
+                <a class="btn" href="nutrition-coaching.html">Get coaching</a>
+                <a class="btn secondary" href="online-tools.html">More tools</a>
+            </div>
+        </div>
+        <div class="page-banner-media">
+            <img src="https://images.pexels.com/photos/4929675/pexels-photo-4929675.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Healthy premade meal box with vegetables grains and protein" class="cover-image">
+        </div>
+    </section>
+
+    <div class="page-hero">
+        <div class="card form-card">
+            <span class="page-pill">Calculator</span>
+            <h2>Estimate your daily calories (Mifflin-St Jeor)</h2>
+            <form id="calForm" class="form-row top-gap-md">
+                <select id="sex" class="input" aria-label="Sex">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <input id="age" class="input" type="number" placeholder="Age (years)" min="10" value="25" aria-label="Age">
+                <input id="weight" class="input" type="number" placeholder="Weight (kg)" min="20" step="0.1" aria-label="Weight">
+                <input id="height" class="input" type="number" placeholder="Height (cm)" min="80" step="0.1" aria-label="Height">
+                <select id="activity" class="input" aria-label="Activity level">
+                    <option value="1.2">Sedentary (little or no exercise)</option>
+                    <option value="1.375">Lightly active (1-3 days/week)</option>
+                    <option value="1.55">Moderately active (3-5 days/week)</option>
+                    <option value="1.725">Very active (6-7 days/week)</option>
+                    <option value="1.9">Extra active (physical job)</option>
+                </select>
+                <select id="goal" class="input" aria-label="Goal">
+                    <option value="-0.20">Cutting (-20%)</option>
+                    <option value="0">Maintenance (0%)</option>
+                    <option value="0.15">Bulking (+15%)</option>
+                </select>
+                <button id="calcCal" class="btn" type="submit">Calculate</button>
+                <button id="resetCal" class="btn secondary" type="button">Reset</button>
+            </form>
+            <div id="calResult" class="result calculator-result top-gap-md" hidden aria-live="polite"></div>
+        </div>
+        <div class="card">
+            <span class="page-pill">How to use</span>
+            <h3>Make the estimate practical</h3>
+            <ul class="feature-list">
+                <li><span><strong>Start here</strong><br>Use the goal-adjusted calories as your first target for 2 to 4 weeks.</span></li>
+                <li><span><strong>Track outcomes</strong><br>Adjust intake if weight, performance, or recovery is moving too slowly.</span></li>
+                <li><span><strong>Prioritize protein</strong><br>The macro suggestion is built to keep muscle retention and satiety in mind.</span></li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer rich-footer">
+    <div class="footer-grid">
+        <div class="footer-brand"><div class="brand"><div class="logo">SF</div><div><h3>Smash Fitness Studio</h3><p class="muted">Calorie planning that leads naturally into meal structure, coaching, and stronger habits.</p></div></div></div>
+        <div><h4>Explore</h4><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="workouts.html">Workouts</a></li><li><a href="nutrition.html">Nutrition</a></li><li><a href="membership.html">Membership</a></li></ul></div>
+        <div><h4>Tools</h4><ul class="footer-links"><li><a href="bmi.html">BMI Calculator</a></li><li><a href="calories.html">Calorie Calculator</a></li><li><a href="online-tools.html">Online Tools</a></li><li><a href="account.html" data-open-login="member">Member Dashboard</a></li></ul></div>
+        <div><h4>Contact</h4><ul class="footer-links"><li><a href="mailto:hello@smashfit.example">hello@smashfit.example</a></li><li><a href="tel:+919000033333">+91 90000 33333</a></li><li><a href="admin.html" data-open-login="admin">Admin Dashboard</a></li></ul></div>
+    </div>
+    <p class="footer-note">© 2026 Smash Fitness Studio</p>
+</footer>
+
+<script src="auth.js"></script>
+
+<script>
+function round(n){return Math.round(n)}
+function calculateCalories(){
+    const sex = document.getElementById('sex').value;
+    const age = parseFloat(document.getElementById('age').value);
+    const w = parseFloat(document.getElementById('weight').value);
+    const h = parseFloat(document.getElementById('height').value);
+    const activity = parseFloat(document.getElementById('activity').value);
+    const goal = parseFloat(document.getElementById('goal').value);
+    const out = document.getElementById('calResult');
+    if(!age || !w || !h || age < 10 || w < 20 || h < 80){
+        out.hidden = false;
+        out.innerHTML = '<div class="muted">Please enter a realistic age, weight, and height.</div>';
+        return;
+    }
+    // Mifflin-St Jeor
+    let bmr = 10*w + 6.25*h - 5*age + (sex==='male'?5:-161);
+    let tdee = bmr * activity;
+    let adjusted = tdee * (1 + goal);
+    const protein_g = 2 * w;
+    const protein_kcal = protein_g * 4;
+    const fats_kcal = adjusted * 0.25;
+    const fats_g = fats_kcal / 9;
+    const carbs_kcal = adjusted - (protein_kcal + fats_kcal);
+    const carbs_g = carbs_kcal / 4;
+    const goalLabel = goal < 0 ? 'Cutting target' : goal > 0 ? 'Bulking target' : 'Maintenance target';
+
+    out.hidden = false;
+    out.innerHTML = `
+        <div class="calculator-summary">
+            <div>
+                <span class="small-muted">BMR</span>
+                <strong>${round(bmr)} kcal</strong>
+            </div>
+            <div>
+                <span class="small-muted">Maintenance</span>
+                <strong>${round(tdee)} kcal</strong>
+            </div>
+            <div>
+                <span class="small-muted">${goalLabel}</span>
+                <strong>${round(adjusted)} kcal</strong>
+            </div>
+        </div>
+        <div class="top-gap-sm"><strong>Suggested macros:</strong></div>
+        <ul class="top-gap-sm">
+            <li>Protein: ${round(protein_g)} g/day (${round(protein_kcal)} kcal)</li>
+            <li>Fats: ${round(fats_g)} g/day (${round(fats_kcal)} kcal)</li>
+            <li>Carbs: ${round(carbs_g)} g/day (${round(carbs_kcal)} kcal)</li>
+        </ul>
+        <div class="small muted top-gap-sm">This is a starting estimate. Track weight, recovery, and gym performance for 2 to 4 weeks before adjusting.</div>
+    `;
+}
+
+document.getElementById('calForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    calculateCalories();
+});
+
+document.getElementById('resetCal').addEventListener('click', function(){
+    document.getElementById('sex').value = 'male';
+    document.getElementById('activity').value = '1.2';
+    document.getElementById('goal').value = '-0.20';
+    document.getElementById('age').value = '25';
+    ['weight','height'].forEach(id => document.getElementById(id).value='');
+    document.getElementById('calResult').innerHTML = '';
+    document.getElementById('calResult').hidden = true;
+});
+</script>
+
+</body>
+</html>

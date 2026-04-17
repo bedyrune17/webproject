@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="dashboardTitle" role="img">
+  <title id="dashboardTitle">Dashboard illustration</title>
+  <rect x="6" y="10" width="52" height="44" rx="8" fill="#1a1f26" stroke="#b11212" stroke-width="2"/>
+  <rect x="12" y="16" width="40" height="6" rx="3" fill="#b11212" opacity="0.9"/>
+  <rect x="12" y="28" width="14" height="18" rx="3" fill="#ffffff" opacity="0.14"/>
+  <rect x="30" y="28" width="22" height="8" rx="3" fill="#ffffff" opacity="0.2"/>
+  <rect x="30" y="40" width="10" height="6" rx="3" fill="#ff9a6b" opacity="0.95"/>
+  <rect x="42" y="38" width="10" height="8" rx="3" fill="#ffffff" opacity="0.55"/>
+  <path d="M16 42l4-6 4 3 4-7" fill="none" stroke="#ff9a6b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

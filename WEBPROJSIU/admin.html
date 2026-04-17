@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Dashboard | Smash Fitness Studio</title>
+  <meta name="description" content="Gym operations dashboard for members, classes, staff, attendance, reporting, and finance.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-shell" data-page-scope="admin">
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">SF</div>
+      <div>
+        <h1>Smash Fitness Studio Admin</h1>
+        <div class="small">Operations, members, classes, staff, and reporting</div>
+      </div>
+    </div>
+    <nav class="main-nav admin-mode" aria-label="Admin sections">
+      <button type="button" class="nav-tab" data-target="profile">Profile</button>
+      <button type="button" class="nav-tab" data-target="members">Members</button>
+      <button type="button" class="nav-tab" data-target="attendance">Attendance</button>
+      <button type="button" class="nav-tab" data-target="finance">Finance</button>
+      <button type="button" class="nav-tab" data-target="reports">Reports</button>
+    </nav>
+    <div id="auth-area" class="auth-area">
+      <button id="auth-btn" class="auth-btn">Login</button>
+    </div>
+  </header>
+
+  <main class="container admin-content">
+    <section id="adminSummary" class="card admin-hero-main">
+      <span class="page-pill">Admin overview</span>
+      <h2>Control the full gym workflow from one dashboard</h2>
+      <p class="muted">The admin side now uses the same shared platform data as the member dashboard, so renewals, attendance, staff, reports, and classes behave like one connected system.</p>
+      <div class="admin-hero-actions">
+        <button type="button" class="btn" data-target="members">Manage members</button>
+        <button type="button" class="btn secondary" data-target="finance">Open finance</button>
+        <button type="button" class="btn secondary" data-target="reports">View reports</button>
+      </div>
+    </section>
+
+    <section class="card admin-kpi-shell">
+      <span class="page-pill">Daily numbers</span>
+      <div id="kpiRow" class="kpi-row top-gap-sm"></div>
+    </section>
+
+    <div class="admin-layout">
+      <aside class="admin-rail">
+        <div class="card admin-rail-card">
+          <span class="page-pill">Workspace</span>
+          <h3>Sections</h3>
+          <div class="admin-rail-links">
+            <button type="button" class="rail-link" data-target="profile">Profile</button>
+            <button type="button" class="rail-link" data-target="members">Members</button>
+            <button type="button" class="rail-link" data-target="past">Archived members</button>
+            <button type="button" class="rail-link" data-target="due">Renewals</button>
+            <button type="button" class="rail-link" data-target="attendance">Attendance</button>
+            <button type="button" class="rail-link" data-target="trainers">Trainers</button>
+            <button type="button" class="rail-link" data-target="classes">Classes</button>
+            <button type="button" class="rail-link" data-target="staff">Staff</button>
+            <button type="button" class="rail-link" data-target="hours">Hours</button>
+            <button type="button" class="rail-link" data-target="calendar">Calendar</button>
+            <button type="button" class="rail-link" data-target="finance">Finance</button>
+            <button type="button" class="rail-link" data-target="reports">Reports</button>
+            <button type="button" class="rail-link" data-target="leads">Leads</button>
+            <button type="button" class="rail-link" data-target="settings">Settings</button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="admin-content">
+        <section id="profile" class="card section-card">
+          <span class="page-pill">Admin profile</span>
+          <h2>Profile and permissions</h2>
+          <p class="muted">Update the signed-in admin details used for this browser session.</p>
+          <form id="adminProfileForm" class="form-row top-gap-md">
+            <input id="aName" placeholder="Full name" class="input" required>
+            <input id="aEmail" placeholder="Email" class="input" readonly>
+            <input id="aEmployeeId" placeholder="Employee ID" class="input">
+            <select id="aRole" class="input">
+              <option value="manager">Manager</option>
+              <option value="coach">Coach</option>
+              <option value="staff">Staff</option>
+            </select>
+            <button type="submit" class="btn">Save profile</button>
+          </form>
+          <div id="profileMsg" class="small-muted top-gap-sm"></div>
+        </section>
+
+        <section id="members" class="card section-card">
+          <span class="page-pill">Members</span>
+          <h2>Register and manage active members</h2>
+          <p class="muted">Add members with a plan, payment mode, and start date, then handle renewals from the live list below.</p>
+          <form id="memberForm" class="form-row top-gap-md">
+            <input id="mName" placeholder="Full name" class="input" required>
+            <input id="mEmail" placeholder="Email" class="input" type="email">
+            <input id="mJoinDateTime" type="datetime-local" class="input" title="Joining date and time">
+            <select id="mPaymentMode" class="input">
+              <option value="cash">Cash</option>
+              <option value="card">Card</option>
+              <option value="online">Online</option>
+            </select>
+            <select id="mDuration" class="input">
+              <option value="1">1 month</option>
+              <option value="6">6 months</option>
+              <option value="12">12 months</option>
+            </select>
+            <button class="btn" type="submit">Add member</button>
+          </form>
+          <div id="membersList" class="top-gap-md"></div>
+        </section>
+
+        <section id="past" class="card section-card">
+          <span class="page-pill">Archived</span>
+          <h2>Past members</h2>
+          <div id="pastList" class="top-gap-md"></div>
+        </section>
+
+        <section id="due" class="card section-card">
+          <span class="page-pill">Renewals</span>
+          <h2>Members due for renewal</h2>
+          <div id="dueList" class="top-gap-md"></div>
+        </section>
+
+        <section id="attendance" class="card section-card">
+          <span class="page-pill">Attendance</span>
+          <h2>Today’s biometric attendance</h2>
+          <div id="attendanceList" class="top-gap-md"></div>
+        </section>
+
+        <section id="trainers" class="card section-card">
+          <span class="page-pill">Trainers</span>
+          <h2>Coaching roster</h2>
+          <div id="trainersList" class="top-gap-md"></div>
+        </section>
+
+        <section id="classes" class="card section-card">
+          <span class="page-pill">Classes</span>
+          <h2>Classes and appointments</h2>
+          <div id="classesList" class="top-gap-md"></div>
+        </section>
+
+        <section id="staff" class="card section-card">
+          <span class="page-pill">Staff</span>
+          <h2>Staff attendance</h2>
+          <form id="staffForm" class="form-row top-gap-md">
+            <input id="sName" placeholder="Staff name" class="input">
+            <select id="sRole" class="input">
+              <option value="Front Desk">Front Desk</option>
+              <option value="Coach">Coach</option>
+              <option value="Cleaning Staff">Cleaning Staff</option>
+              <option value="Operations">Operations</option>
+            </select>
+            <button class="btn" type="submit">Add or mark present</button>
+          </form>
+          <div id="staffList" class="top-gap-md"></div>
+        </section>
+
+        <section id="hours" class="card section-card">
+          <span class="page-pill">Hours</span>
+          <h2>Working hours</h2>
+          <div id="hoursForm" class="top-gap-md"></div>
+        </section>
+
+        <section id="calendar" class="card section-card">
+          <span class="page-pill">Calendar</span>
+          <h2>Daily snapshot</h2>
+          <div class="form-row top-gap-md">
+            <input type="date" id="calDate" class="input">
+            <button class="btn" id="showDate" type="button">Show date summary</button>
+          </div>
+          <div id="calendarEvents" class="top-gap-md"></div>
+        </section>
+
+        <section id="finance" class="card section-card">
+          <span class="page-pill">Finance</span>
+          <h2>Income and expense tracking</h2>
+          <form id="financeForm" class="form-row top-gap-md">
+            <select id="feType" class="input">
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <input id="feAmount" type="number" step="0.01" placeholder="Amount" class="input">
+            <input id="feDesc" placeholder="Description" class="input">
+            <button class="btn" type="submit">Record entry</button>
+          </form>
+          <div id="financeList" class="top-gap-md"></div>
+        </section>
+
+        <section id="reports" class="card section-card">
+          <span class="page-pill">Reports</span>
+          <h2>Operational snapshot</h2>
+          <div id="reportsList" class="top-gap-md"></div>
+        </section>
+
+        <section id="leads" class="card section-card">
+          <span class="page-pill">Leads</span>
+          <h2>Prospect pipeline</h2>
+          <div id="leadsList" class="top-gap-md"></div>
+        </section>
+
+        <section id="settings" class="card section-card">
+          <span class="page-pill">Settings</span>
+          <h2>Gym settings and launch notes</h2>
+          <div id="settingsPanel" class="top-gap-md"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">© 2026 Smash Fitness Studio</footer>
+  <script src="auth.js"></script>
+  <script src="gym-data.js"></script>
+  <script src="admin-app.js"></script>
+</body>
+</html>

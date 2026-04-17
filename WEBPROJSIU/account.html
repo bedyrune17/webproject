@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Member Dashboard | Smash Fitness Studio</title>
+  <meta name="description" content="Private member dashboard for attendance, billing, classes, and progress tracking.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="member-shell" data-page-scope="member">
+<header class="site-header">
+  <div class="brand">
+    <div class="logo">SF</div>
+    <div>
+      <h1>Member Dashboard</h1>
+      <div class="small">Attendance, bookings, renewals, and progress in one place</div>
+    </div>
+  </div>
+  <nav class="main-nav" aria-label="Member sections">
+    <a href="#overview" data-member-target="overview">Overview</a>
+    <a href="#attendance" data-member-target="attendance">Attendance</a>
+    <a href="#classes" data-member-target="classes">Classes</a>
+    <a href="#billing" data-member-target="billing">Billing</a>
+    <a href="#progress" data-member-target="progress">Progress</a>
+  </nav>
+  <div id="auth-area" class="auth-area">
+    <button id="auth-btn" class="auth-btn">Login</button>
+  </div>
+</header>
+
+<main class="container">
+  <div class="page-hero">
+    <section class="card form-card">
+      <span class="page-pill">Member profile</span>
+      <h2>Keep your profile and membership details current</h2>
+      <p class="muted">This dashboard now runs as a proper member app, so your attendance, class bookings, trainer info, and billing all stay inside one private flow.</p>
+      <form id="acctForm" class="stack-sm top-gap-md">
+        <div class="form-row">
+          <input id="acct-name" class="input" placeholder="Full name" autocomplete="name">
+          <input id="acct-email" class="input" placeholder="Email address" type="email" autocomplete="email">
+        </div>
+        <div class="cta-row">
+          <button id="saveAcct" class="btn" type="button">Save profile</button>
+          <button id="clearAcct" class="btn secondary" type="button">Logout</button>
+        </div>
+      </form>
+      <div id="acctMsg" class="small-muted top-gap-sm" aria-live="polite"></div>
+    </section>
+
+    <aside class="card">
+      <span class="page-pill">Quick access</span>
+      <h3>What changed here</h3>
+      <ul class="feature-list top-gap-sm">
+        <li><span><strong>Real member sections</strong><br>Overview, biometric attendance, class booking, billing, and progress all live in one dashboard.</span></li>
+        <li><span><strong>Shared gym data</strong><br>Member and admin pages now use the same local records instead of separate browser-only logic.</span></li>
+        <li><span><strong>Cleaner navigation</strong><br>Only the active member tools stay visible, so the page feels focused instead of mixed with public content.</span></li>
+      </ul>
+    </aside>
+  </div>
+
+  <div id="modeArea" class="top-gap-md"></div>
+</main>
+
+<footer class="site-footer">© 2026 Smash Fitness Studio</footer>
+
+<script src="auth.js"></script>
+<script src="gym-data.js"></script>
+<script src="member-app.js"></script>
+</body>
+</html>

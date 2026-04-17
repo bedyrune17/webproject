@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="mobilityTitle" role="img">
+  <title id="mobilityTitle">Mobility illustration</title>
+  <rect x="8" y="10" width="48" height="44" rx="10" fill="#1a1f26" stroke="#b11212" stroke-width="2"/>
+  <circle cx="24" cy="20" r="5" fill="#ffffff" opacity="0.92"/>
+  <path d="M24 26l6 8 10-2" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 34l-8 10" fill="none" stroke="#ff9a6b" stroke-width="3" stroke-linecap="round"/>
+  <path d="M31 35l9 11" fill="none" stroke="#44c38b" stroke-width="3" stroke-linecap="round"/>
+  <path d="M41 18c3 2 5 5 5 9 0 7-6 13-13 13" fill="none" stroke="#ff9a6b" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
